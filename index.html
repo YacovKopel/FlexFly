@@ -11,7 +11,7 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
     crossorigin="anonymous"
   />
-    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="./assets/styles.css">
 </head>
 
 <header class="d-flex flex-column flex-md-row justify-content-between align-items-center p-3 px-md-4 mb-2 bg-white">
@@ -30,29 +30,29 @@
             <form>
             <label for="validationTooltip01">From: </label>
             <div class="form-group input-group pb-3">
-                <input name="" class="form-control" placeholder="City" type="text">
+                <input id="fromInput" class="form-control" placeholder="City" type="text">
             </div> <!-- form-group// -->
             <label for="validationTooltip01">To:  </label>
             <div class="form-group input-group pb-3">
-                <input name="" class="form-control" placeholder="City" type="email">
+                <input id="toInput" class="form-control" placeholder="City" type="text">
             </div> <!-- form-group// -->
             <label for="validationTooltip01">Duration of Trip: </label>
             <div class="form-group input-group pb-3">
-                <input name="" class="form-control" placeholder="Number of Days" type="text">
+                <input id="durationInput" class="form-control" placeholder="Number of Days" type="text" >
             </div> <!-- form-group// -->
             <label for="validationTooltip01">Months from Now: </label>
             <div class="form-group input-group pb-3">
-                <select class="form-control">
-                    <option selected=""> Now - 1 month</option>
-                    <option>Now - 2 month</option>
-                    <option>Now - 3 month</option>
-                    <option>Now - 4 month</option>
-                    <option>Now - 5 month</option>
-                    <option>Now - 6 month</option>
+                <select id="numMonths" class="form-control" >
+                    <option value="1" selected=""> Now - 1 month</option>
+                    <option value="2">Now - 2 months</option>
+                    <option value="3">Now - 3 months</option>
+                    <option value="4">Now - 4 months</option>
+                    <option value="5">Now - 5 months</option>
+                    <option value="6">Now - 6 months</option>
                 </select>
             </div> <!-- form-group end.// -->                                     
             <div class="form-group pb-3">
-                <button type="submit" class="btn btn-primary btn-block"> Search Deals! </button>
+                <button id="submit" type="submit" class="btn btn-primary btn-block"> Search Deals! </button>
             </div> <!-- form-group// -->      
                                                                  
         </form>
@@ -69,6 +69,6 @@ src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.j
 integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 crossorigin="anonymous"
 ></script>
-<script src="/assets/script.js"></script>
+<script src="./assets/script.js"></script>
 </body>
 </html>
