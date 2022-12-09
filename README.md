@@ -42,6 +42,8 @@ Javascript
 Photoshop
 
 #Supported API's
-* Tequila 9dU5c1zZxOO4AyOA58aEW70owtRgoHgC
+* Tequila:9dU5c1zZxOO4AyOA58aEW70owtRgoHgC
 * Ticketmaster 
-* Seat Geek 
+* Seat Geek:
+ID: MzA4OTQzMjR8MTY3MDYxMjQzMi41NjI0NDc4
+SECRET: ebff188f77eaa78207b69776f2f6a4a121a35d69e0d580e3fff4ec21435348cb
