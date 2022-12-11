@@ -16,4 +16,6 @@ fetch(requestUrl, {
   .catch(function (error) {
     console.log(error);
   });
-  document.body.style.backgroundImage = "url('./assets/images/image1.webp')";
+
+
+
