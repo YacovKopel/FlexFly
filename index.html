@@ -18,11 +18,55 @@
     <link rel="stylesheet" href="./assets/styles.css" />
   </head>
   <header>
-
+    <nav class="navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand" style="color:white" href="#">FlexFly</a>
+        <!--nav search-->
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Support</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact Us</a>
+          </li>
+      </div>
+    </nav>
   </header>
-  <body class="bg-fixed"  style="background-image: url(./assets/images/usethisone.jpg)">
+  <body class="bg-fixed bg-no-repeat"  style="background-image: url(./assets/images/usethisone.jpg)">
    
-
+    <div class="text-white container-sm bg-white/40">
+      <article class="card-body mx-auto g-2 g-lg-3" style="max-width: 400px;">
+          <h4 class="card-title mt-3 text-center">Plan your Trip</h4>
+          <form>
+          <label for="validationTooltip01">From: </label>
+          <div class="form-group input-group pb-3">
+              <input name="" class="form-control" placeholder="City" type="text">
+          </div> <!-- form-group// -->
+          <label for="validationTooltip01">To:  </label>
+          <div class="form-group input-group pb-3">
+              <input name="" class="form-control" placeholder="City" type="email">
+          </div> <!-- form-group// -->
+          <label for="validationTooltip01">Duration of Trip: </label>
+          <div class="form-group input-group pb-3">
+              <input name="" class="form-control" placeholder="Number of Days" type="text">
+          </div> <!-- form-group// -->
+          <label for="validationTooltip01">Months from Now: </label>
+          <div class="form-group input-group pb-3">
+              <select class="form-control">
+                  <option selected=""> Now - 1 month</option>
+                  <option>Now - 2 month</option>
+                  <option>Now - 3 month</option>
+                  <option>Now - 4 month</option>
+                  <option>Now - 5 month</option>
+                  <option>Now - 6 month</option>
+              </select>
+          </div> <!-- form-group end.// -->                                     
+          <div class="form-group pb-3">
+              <button type="submit" class="btn btn-primary btn-block"> Search Deals! </button>
+          </div> <!-- form-group// -->      
+                                                               
+      </form>
+      </article>
 
 
    
