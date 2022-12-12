@@ -36,18 +36,6 @@ function returnMon() {
 var url = 'https://api.tequila.kiwi.com/v2/search';
 var apikey = '9dU5c1zZxOO4AyOA58aEW70owtRgoHgC';
 
-// const options = {
-// 	method: 'GET',
-// 	headers: {
-// 		'X-RapidAPI-Key': '38fb04b87bmsh6cb52bdef7ffc4fp15ab0ejsnd45492be722f',
-// 		'X-RapidAPI-Host': 'iata-and-icao-codes.p.rapidapi.com'
-// 	}
-// };
-
-// fetch('https://iata-and-icao-codes.p.rapidapi.com/airlines', options)
-// 	.then(response => response.json())
-// 	.then(response => console.log(response))
-// 	.catch(err => console.error(err));
 var fromCity='';
 function getFlightUrl(fromCity) {
         
