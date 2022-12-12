@@ -1,9 +1,9 @@
-.custom row {
+.custom-row {
     display: flex;
     width: 100%;
   }
   
-  .custom row div {
+  .custom-row div {
     width: 50%;
   }
   
