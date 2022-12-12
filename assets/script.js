@@ -16,6 +16,3 @@ fetch(requestUrl, {
   .catch(function (error) {
     console.log(error);
   });
-
-
-
