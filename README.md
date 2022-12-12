@@ -1,13 +1,13 @@
 #Flexfly
 
 #Project Goals 
-*To provide a user friendly experince where users can find inexspensive flights and experiences in a single application. Save money and time in an application that will initially be an information page only 
+*To provide a user friendly experience where users can find inexpensive flights and experiences in a single application. Save money and time in an application that will initially be an information page only 
 
 #Iceboxed ideas: 
 *Possible bookings
 *Added ability to find Hotels and Air BNB
 *Store user data
-*Find a way to monatize
+*Find a way to monotize
 
 #Mockup (Rough draft)
 (https://files.slack.com/files-pri/T045V7WPE1J-F04ETLUNGJD/flexfly_mockup.png)
@@ -22,7 +22,7 @@
 * As a user I want to see a list of options based on my preferences 
 * As a user I want to be able to select the option based on my query
 #(Pg 3)
-* As a user I want to see my flight itenarary based on my inputs
+* As a user I want to see my flight itinerary based on my inputs
 * As a user I want to see a list of events happening in the city I selected
 
 
