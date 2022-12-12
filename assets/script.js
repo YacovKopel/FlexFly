@@ -1,45 +1,44 @@
-var submitBtn= $('#submit');
-var from=$('#fromInput');
-var to = $('#toInput');
-var duration = $('#durationInput');
-var numMonths = $('#numMonths');
-var one= $('#plusOne');
-var two =$('#plusTwo');
-var three= $('#plusThree');
-var four=$('#plusFour');
-var five = $('#plusFive')
-var six = $('#plusSix');
-var today=dayjs().format('DD/MM/YYYY');
-$('#time').text(today);
+var submitBtn = $("#submit");
+var from = $("#fromInput");
+var to = $("#toInput");
+var duration = $("#durationInput");
+var numMonths = $("#numMonths");
+var one = $("#plusOne");
+var two = $("#plusTwo");
+var three = $("#plusThree");
+var four = $("#plusFour");
+var five = $("#plusFive");
+var six = $("#plusSix");
+var today = dayjs().format("DD/MM/YYYY");
+var cardOne = $(".card-1");
+var cardTwo = $(".card-2");
+var cardThree = $(".card-3");
+$("#time").text(today);
 
-var uptodate=''
+var uptodate = "";
 function returnMon() {
-    if (numMonths.val()=='Now - 1 month') {
-        uptodate= dayjs().add(1, 'month').format('DD/MM/YYYY') 
-    }
-    else if (numMonths.val()=='Now - 2 months') {
-        uptodate= dayjs().add(2, 'month').format('DD/MM/YYYY') 
-    }else if (numMonths.val()=='Now - 3 months') {
-        uptodate= dayjs().add(3, 'month').format('DD/MM/YYYY') 
-    }
-    else if (numMonths.val()=='Now - 4 months') {
-        uptodate= dayjs().add(4, 'month').format('DD/MM/YYYY') 
-    }
-    else if (numMonths.val()=='Now - 5 months') {
-        uptodate= dayjs().add(5, 'month').format('DD/MM/YYYY') 
-    }else if (numMonths.val()=='Now - 6 months') {
-        uptodate= dayjs().add(6, 'month').format('DD/MM/YYYY') 
-    }
-    return uptodate
+  if (numMonths.val() == "Now - 1 month") {
+    uptodate = dayjs().add(1, "month").format("DD/MM/YYYY");
+  } else if (numMonths.val() == "Now - 2 months") {
+    uptodate = dayjs().add(2, "month").format("DD/MM/YYYY");
+  } else if (numMonths.val() == "Now - 3 months") {
+    uptodate = dayjs().add(3, "month").format("DD/MM/YYYY");
+  } else if (numMonths.val() == "Now - 4 months") {
+    uptodate = dayjs().add(4, "month").format("DD/MM/YYYY");
+  } else if (numMonths.val() == "Now - 5 months") {
+    uptodate = dayjs().add(5, "month").format("DD/MM/YYYY");
+  } else if (numMonths.val() == "Now - 6 months") {
+    uptodate = dayjs().add(6, "month").format("DD/MM/YYYY");
+  }
+  return uptodate;
 }
 
-var url = 'https://api.tequila.kiwi.com/v2/search';
-var apikey = '9dU5c1zZxOO4AyOA58aEW70owtRgoHgC';
+var url = "https://api.tequila.kiwi.com/v2/search";
+var apikey = "9dU5c1zZxOO4AyOA58aEW70owtRgoHgC";
 
 var fromCity='';
 var toCity=''
 function getFlightUrl(fromCity, toCity) {
-
         
     var newurl= 'https://api.tequila.kiwi.com/v2/search' + '?fly_from='+ fromCity
      + '&fly_to=' + toCity +'&return_from='+ today +'&return_to='+ uptodate + '&nights_in_dst_from=' + duration.val() 
@@ -140,8 +139,17 @@ $(document).ready(function(){
         
          // Submit the form
     });
-});
+}
 
+$(document).ready(function () {
+  submitBtn.on("click", function (event) {
+    event.preventDefault();
+    returnMon(uptodate);
+    getCityCode();
+
+    // Submit the form
+  });
+});
 
 // function autocomplete(inp, arr) {
 //     /*the autocomplete function takes two arguments,
@@ -240,7 +248,6 @@ $(document).ready(function(){
 //   });
 //   };
 //   autocomplete(document.getElementById("fromInput"), countries);
-
 
 // need from input to switch to code from location api
 // then do same for return city
