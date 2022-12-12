@@ -1,4 +1,11 @@
+body {
+  background-size: cover;
+}
 
+.container-sm {
+  width: 500px;
+  padding: 10px;
+}
 .autocomplete {
   /*the container must be positioned relative:*/
   position: relative;
