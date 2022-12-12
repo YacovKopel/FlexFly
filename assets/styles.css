@@ -1,0 +1,28 @@
+.row {
+    display: flex;
+    width: 100%;
+  }
+  
+  .row div {
+    width: 50%;
+  }
+  
+  .noMargin {
+    margin: 20px;
+  }
+  
+  .one {
+    background-color: red;
+  }
+  
+  .two {
+    background-color: yellow;
+  }
+  
+  .three {
+    background-color: green;
+  }
+  
+  .four {
+    background-color: blue;
+  }
