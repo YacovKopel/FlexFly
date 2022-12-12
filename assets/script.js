@@ -37,10 +37,7 @@ var url = 'https://api.tequila.kiwi.com/v2/search';
 var apikey = '9dU5c1zZxOO4AyOA58aEW70owtRgoHgC';
 
 var fromCity='';
-var toCity=''
-function getFlightUrl(fromCity, toCity) {
-    // getCityCode()
-    // getCityCodeTo()
+function getFlightUrl(fromCity) {
         
     var newurl= 'https://api.tequila.kiwi.com/v2/search' + '?fly_from='+ fromCity
      + '&fly_to=' + toCity +'&return_from='+ today +'&return_to='+ uptodate + '&nights_in_dst_from=' + duration.val() 
