@@ -54,7 +54,7 @@ function getFlightUrl(fromCity, toCity) {
     "&nights_in_dst_to=" +
     duration.val() +
     "&flight_type=round" +
-    "&curr=USD&max_stopovers=1&sort=price&asc=1&limit=3";
+    "&curr=USD&max_stopovers=0&sort=price&asc=1&limit=3";
   console.log(newurl);
   fetch(newurl, {
     method: "GET",
@@ -68,16 +68,16 @@ function getFlightUrl(fromCity, toCity) {
     .then(function (data) {
       console.log(data);
       console.log(data.data.length);
-      for (let i = 0; i < data.data.length; i++) {
-        var fullflight = data.data[i].route;
-        console.log("price", data.data[i].price);
+      for (let j = 0; j < data.data.length; j++) {
+        var fullflight = data.data[j].route;
+        console.log("price", data.data[j].price);
         console.log(
           "Flight from " +
-            data.data[i].cityFrom +
+            data.data[j].cityFrom +
             " to " +
-            data.data[i].cityTo +
+            data.data[j].cityTo +
             " only $" +
-            data.data[i].price
+            data.data[j].price
         );
         console.log(fullflight);
         var flightData = [];
@@ -92,11 +92,12 @@ function getFlightUrl(fromCity, toCity) {
             flightNumber: fullflight[i].flight_no,
             departure: fullflight[i].local_departure,
             arrival: fullflight[i].local_arrival,
-            price: data.data[i].price,
+            flightprice: data.data[j].price,
           });
         }
-        localStorage.setItem("flightData" + i, JSON.stringify(flightData));
-        window.location.href = "./assets/info.html";
+      
+        localStorage.setItem("flightData" + j, JSON.stringify(flightData));
+        // window.location.href = "./assets/info.html";
       }
     })
     .catch(function (error) {
@@ -164,56 +165,56 @@ $(document).ready(function () {
     // Submit the form
   });
 });
-var flightResults = JSON.parse(localStorage.getItem("flightData0"));
-$(".card-title-1").text(flightResults[0].airline);
-$(".card-subtitle-1").text("$" + flightResults[0].price);
+var flightResults1 = JSON.parse(localStorage.getItem("flightData0"));
+$(".card-title-1").text(flightResults1[0].airline);
+$(".card-subtitle-1").text("$" + flightResults1[0].price);
 
-var flightResults = JSON.parse(localStorage.getItem("flightData1"));
-$(".card-title-2").text(flightResults[0].airline);
-$(".card-subtitle-2").text("$" + flightResults[0].price);
+var flightResults2 = JSON.parse(localStorage.getItem("flightData1"));
+$(".card-title-2").text(flightResults2[0].airline);
+$(".card-subtitle-2").text("$" + flightResults2[0].price);
 
-var flightResults = JSON.parse(localStorage.getItem("flightData2"));
-$(".card-title-3").text(flightResults[0].airline);
-$(".card-subtitle-3").text("$" + flightResults[0].price);
+var flightResults3 = JSON.parse(localStorage.getItem("flightData2"));
+$(".card-title-3").text(flightResults3[0].airline);
+$(".card-subtitle-3").text("$" + flightResults3[0].price);
 
 //departure and arrival locations
-$(".departure-1").text(flightResults[0].fullCityNameFrom);
-$(".arrival-1").text(flightResults[0].fullCityNameTo);
-$(".departure-2").text(flightResults[0].fullCityNameFrom);
-$(".arrival-2").text(flightResults[0].fullCityNameTo);
-$(".departure-3").text(flightResults[0].fullCityNameFrom);
-$(".arrival-3").text(flightResults[0].fullCityNameTo);
+$(".departure-1").text(flightResults1[0].fullCityNameFrom);
+$(".arrival-1").text(flightResults1[0].fullCityNameTo);
+$(".departure-2").text(flightResults2[0].fullCityNameFrom);
+$(".arrival-2").text(flightResults2[0].fullCityNameTo);
+$(".departure-3").text(flightResults3[0].fullCityNameFrom);
+$(".arrival-3").text(flightResults3[0].fullCityNameTo);
 
 //departure and arrival times
 $(".departure-time-1").text(
-  flightResults[0].departure.split("T")[0] +
+  flightResults1[0].departure.split("T")[0] +
     " " +
-    flightResults[0].departure.split("T")[1].split(".")[0].slice(0, -3)
+    flightResults1[0].departure.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".arrival-time-1").text(
-  flightResults[0].arrival.split("T")[0] +
+  flightResults1[0].arrival.split("T")[0] +
     " " +
-    flightResults[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
+    flightResults1[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".departure-time-2").text(
-  flightResults[1].departure.split("T")[0] +
+  flightResults2[0].departure.split("T")[0] +
     " " +
-    flightResults[1].departure.split("T")[1].split(".")[0].slice(0, -3)
+    flightResults2[0].departure.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".arrival-time-2").text(
-  flightResults[1].arrival.split("T")[0] +
+  flightResults2[0].arrival.split("T")[0] +
     " " +
-    flightResults[1].arrival.split("T")[1].split(".")[0].slice(0, -3)
+    flightResults2[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".departure-time-3").text(
-  flightResults[2].departure.split("T")[0] +
+  flightResults3[0].departure.split("T")[0] +
     " " +
-    flightResults[2].departure.split("T")[1].split(".")[0].slice(0, -3)
+    flightResults3[0].departure.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".arrival-time-3").text(
-  flightResults[2].arrival.split("T")[0] +
+  flightResults3[0].arrival.split("T")[0] +
     " " +
-    flightResults[2].arrival.split("T")[1].split(".")[0].slice(0, -3)
+    flightResults3[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
 // function autocomplete(inp, arr) {
 //     /*the autocomplete function takes two arguments,
