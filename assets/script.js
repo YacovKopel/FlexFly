@@ -97,7 +97,7 @@ function getFlightUrl(fromCity, toCity) {
         }
       
         localStorage.setItem("flightData" + j, JSON.stringify(flightData));
-        // window.location.href = "./assets/info.html";
+        window.location.href = "./assets/info.html";
       }
     })
     .catch(function (error) {
