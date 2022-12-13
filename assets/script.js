@@ -36,10 +36,9 @@ function returnMon() {
 var url = "https://api.tequila.kiwi.com/v2/search";
 var apikey = "9dU5c1zZxOO4AyOA58aEW70owtRgoHgC";
 
-var fromCity='';
-var toCity=''
+var fromCity = "";
+var toCity = "";
 function getFlightUrl(fromCity, toCity) {
-
         
     var newurl= 'https://api.tequila.kiwi.com/v2/search' + '?fly_from='+ fromCity
      + '&fly_to=' + toCity +'&return_from='+ today +'&return_to='+ uptodate + '&nights_in_dst_from=' + duration.val() 
@@ -87,29 +86,36 @@ function getFlightUrl(fromCity, toCity) {
         });
 }
 async function getCityCodeFrom() {
-    var citynewurl= 'https://api.tequila.kiwi.com/locations/query' + '?term='+ from.val()+'&locale=en-US&location_types=city&limit=10&active_only=true'      
-    console.log(citynewurl)
-    await fetch(citynewurl, {
-        method: "GET",
-        withCredentials: true,
-        headers: {
-          "apikey": apikey,
-          "Content-Type": "application/json"
-        }
-      })
-        .then(resp => resp.json())
-        .then(function(data){
-           fromCity= data.locations[0].code
-           console.log(fromCity)
-           getCityCodeTo()
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-       
+  var citynewurl =
+    "https://api.tequila.kiwi.com/locations/query" +
+    "?term=" +
+    from.val() +
+    "&locale=en-US&location_types=city&limit=10&active_only=true";
+  console.log(citynewurl);
+  await fetch(citynewurl, {
+    method: "GET",
+    withCredentials: true,
+    headers: {
+      apikey: apikey,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((resp) => resp.json())
+    .then(function (data) {
+      fromCity = data.locations[0].code;
+      console.log(fromCity);
+      getCityCodeTo();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 async function getCityCodeTo() {
-    var toCityurl = 'https://api.tequila.kiwi.com/locations/query' + '?term='+ to.val()+'&locale=en-US&location_types=city&limit=10&active_only=true'      
+  var toCityurl =
+    "https://api.tequila.kiwi.com/locations/query" +
+    "?term=" +
+    to.val() +
+    "&locale=en-US&location_types=city&limit=10&active_only=true";
 
     console.log(toCityurl)
     await fetch(toCityurl, {
@@ -132,16 +138,37 @@ async function getCityCodeTo() {
        
 }
 
+$(document).ready(function(){
+    submitBtn.on('click',function(event){
+        event.preventDefault();
+        returnMon(uptodate);
+        getCityCodeFrom();
+        
+         // Submit the form
+    });
+}
 
 $(document).ready(function () {
   submitBtn.on("click", function (event) {
     event.preventDefault();
     returnMon(uptodate);
-    getCityCode();
-
+    getCityCodeFrom();
+  
     // Submit the form
   });
 });
+var flightResults = JSON.parse(localStorage.getItem("flightData0"));
+$(".card-title-1").text(flightResults[0].airline);
+$(".card-subtitle-1").text(flightResults[0].flightNumber);
+
+var flightResults = JSON.parse(localStorage.getItem("flightData1"));
+$(".card-title-2").text(flightResults[0].airline);
+$(".card-subtitle-2").text(flightResults[0].flightNumber);
+
+var flightResults = JSON.parse(localStorage.getItem("flightData2"));
+$(".card-title-3").text(flightResults[0].airline);
+$(".card-subtitle-3").text(flightResults[0].flightNumber);
+
 
 // function autocomplete(inp, arr) {
 //     /*the autocomplete function takes two arguments,
