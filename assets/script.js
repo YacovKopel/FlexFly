@@ -319,3 +319,4 @@ $(".arrival-time-3").text(
 // set data as variables for second page
 
 // print results on cards
+//trying to repush
