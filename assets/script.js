@@ -39,51 +39,68 @@ var apikey = "9dU5c1zZxOO4AyOA58aEW70owtRgoHgC";
 var fromCity = "";
 var toCity = "";
 function getFlightUrl(fromCity, toCity) {
-        
-    var newurl= 'https://api.tequila.kiwi.com/v2/search' + '?fly_from='+ fromCity
-     + '&fly_to=' + toCity +'&return_from='+ today +'&return_to='+ uptodate + '&nights_in_dst_from=' + duration.val() 
-     + '&nights_in_dst_to=' + duration.val()+'&flight_type=round' + '&curr=USD&max_stopovers=1&sort=price&asc=1&limit=3'      
-    console.log(newurl)
-    fetch(newurl, {
-        method: "GET",
-        withCredentials: true,
-        headers: {
-          "apikey": apikey,
-          "Content-Type": "application/json"
+  var newurl =
+    "https://api.tequila.kiwi.com/v2/search" +
+    "?fly_from=" +
+    fromCity +
+    "&fly_to=" +
+    toCity +
+    "&return_from=" +
+    today +
+    "&return_to=" +
+    uptodate +
+    "&nights_in_dst_from=" +
+    duration.val() +
+    "&nights_in_dst_to=" +
+    duration.val() +
+    "&flight_type=round" +
+    "&curr=USD&max_stopovers=1&sort=price&asc=1&limit=3";
+  console.log(newurl);
+  fetch(newurl, {
+    method: "GET",
+    withCredentials: true,
+    headers: {
+      apikey: apikey,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((resp) => resp.json())
+    .then(function (data) {
+      console.log(data);
+      console.log(data.data.length);
+      for (let i = 0; i < data.data.length; i++) {
+        var fullflight = data.data[i].route;
+        console.log("price", data.data[i].price);
+        console.log(
+          "Flight from " +
+            data.data[i].cityFrom +
+            " to " +
+            data.data[i].cityTo +
+            " only $" +
+            data.data[i].price
+        );
+        console.log(fullflight);
+        var flightData = [];
+        for (let i = 0; i < fullflight.length; i++) {
+          console.log(fullflight.length);
+          flightData.push({
+            cityCodefrom: fullflight[i].cityCodeFrom,
+            cityCodeto: fullflight[i].cityCodeTo,
+            airline: fullflight[i].airline,
+            fullCityNameFrom: fullflight[i].cityFrom,
+            fullCityNameTo: fullflight[i].cityTo,
+            flightNumber: fullflight[i].flight_no,
+            departure: fullflight[i].local_departure,
+            arrival: fullflight[i].local_arrival,
+          });
         }
-      })
-        .then(resp => resp.json())
-        .then(function(data) {
-          console.log(data);
-          console.log(data.data.length)
-          for (let i = 0; i < data.data.length; i++) {
-            var fullflight=data.data[i].route
-           console.log("price", data.data[i].price)
-           console.log("Flight from "+data.data[i].cityFrom+ " to "+data.data[i].cityTo+ " only $"+  data.data[i].price)
-            console.log(fullflight)
-            var flightData=[]
-            for (let i = 0; i < fullflight.length; i++) {
-                console.log(fullflight.length)
-                flightData.push({
-                    cityCodefrom :fullflight[i].cityCodeFrom,
-                    cityCodeto: fullflight[i].cityCodeTo,
-                    airline: fullflight[i].airline,
-                    fullCityNameFrom: fullflight[i].cityFrom,
-                    fullCityNameTo: fullflight[i].cityTo,
-                    flightNumber: fullflight[i].flight_no,
-                    departure: fullflight[i].local_departure,
-                    arrival: fullflight[i].local_arrival
-
-                })
-  
-        
-            }
-            localStorage.setItem("flightData"+i, JSON.stringify(flightData))
-        }
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+        localStorage.setItem("flightData" + i, JSON.stringify(flightData));
+        window.location.href = "./assets/info.html";
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 async function getCityCodeFrom() {
   var citynewurl =
@@ -117,34 +134,23 @@ async function getCityCodeTo() {
     to.val() +
     "&locale=en-US&location_types=city&limit=10&active_only=true";
 
-    console.log(toCityurl)
-    await fetch(toCityurl, {
-        method: "GET",
-        withCredentials: true,
-        headers: {
-          "apikey": apikey,
-          "Content-Type": "application/json"
-        }
-      })
-        .then(resp => resp.json())
-        .then(function(data){
-           toCity= data.locations[0].code
-           console.log(toCity)
-           getFlightUrl(fromCity, toCity)
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-       
-}
-
-$(document).ready(function(){
-    submitBtn.on('click',function(event){
-        event.preventDefault();
-        returnMon(uptodate);
-        getCityCodeFrom();
-        
-         // Submit the form
+  console.log(toCityurl);
+  await fetch(toCityurl, {
+    method: "GET",
+    withCredentials: true,
+    headers: {
+      apikey: apikey,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((resp) => resp.json())
+    .then(function (data) {
+      toCity = data.locations[0].code;
+      console.log(toCity);
+      getFlightUrl(fromCity, toCity);
+    })
+    .catch(function (error) {
+      console.log(error);
     });
 }
 
