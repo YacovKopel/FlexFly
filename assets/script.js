@@ -38,6 +38,7 @@ var apikey = "9dU5c1zZxOO4AyOA58aEW70owtRgoHgC";
 
 var fromCity = "";
 var toCity = "";
+
 function getFlightUrl(fromCity, toCity) {
   var newurl =
     "https://api.tequila.kiwi.com/v2/search" +
@@ -84,8 +85,8 @@ function getFlightUrl(fromCity, toCity) {
         for (let i = 0; i < fullflight.length; i++) {
           console.log(fullflight.length);
           flightData.push({
-            cityCodefrom: fullflight[i].cityCodeFrom,
-            cityCodeto: fullflight[i].cityCodeTo,
+            cityCodeFrom: fullflight[i].cityCodeFrom,
+            cityCodeTo: fullflight[i].cityCodeTo,
             airline: fullflight[i].airline,
             fullCityNameFrom: fullflight[i].cityFrom,
             fullCityNameTo: fullflight[i].cityTo,
@@ -96,6 +97,7 @@ function getFlightUrl(fromCity, toCity) {
           });
         }
         localStorage.setItem("flightData" + i, JSON.stringify(flightData));
+        localStorage.setItem("toCity", toCity);
         window.location.href = "./assets/info.html";
       }
     })
@@ -165,16 +167,16 @@ $(document).ready(function () {
   });
 });
 var flightResultsOne = JSON.parse(localStorage.getItem("flightData0"));
-$(".card-title-1").text(flightResults[0].airline);
-$(".card-subtitle-1").text("$" + flightResults[0].price);
+$(".card-title-1").text(flightResultsOne[0].airline);
+$(".card-subtitle-1").text("$" + flightResultsOne[0].price);
 
 var flightResultsTwo = JSON.parse(localStorage.getItem("flightData1"));
-$(".card-title-2").text(flightResults[0].airline);
-$(".card-subtitle-2").text("$" + flightResults[0].price);
+$(".card-title-2").text(flightResultsTwo[0].airline);
+$(".card-subtitle-2").text("$" + flightResultsTwo[0].price);
 
 var flightResultsThree = JSON.parse(localStorage.getItem("flightData2"));
-$(".card-title-3").text(flightResults[0].airline);
-$(".card-subtitle-3").text("$" + flightResults[0].price);
+$(".card-title-3").text(flightResultsThree[0].airline);
+$(".card-subtitle-3").text("$" + flightResultsThree[0].price);
 
 //departure and arrival locations
 $(".departure-1").text(flightResultsOne[0].fullCityNameFrom);
@@ -196,147 +198,58 @@ $(".arrival-time-1").text(
     flightResultsOne[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".departure-time-2").text(
-  flightResultsTwo[1].departure.split("T")[0] +
+  flightResultsTwo[0].departure.split("T")[0] +
     " " +
-    flightResultsTwo[1].departure.split("T")[1].split(".")[0].slice(0, -3)
+    flightResultsTwo[0].departure.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".arrival-time-2").text(
-  flightResultsTwo[1].arrival.split("T")[0] +
+  flightResultsTwo[0].arrival.split("T")[0] +
     " " +
-    flightResultsTwo[1].arrival.split("T")[1].split(".")[0].slice(0, -3)
+    flightResultsTwo[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".departure-time-3").text(
-  flightResultsThree[2].departure.split("T")[0] +
+  flightResultsThree[0].departure.split("T")[0] +
     " " +
-    flightResultsThree[2].departure.split("T")[1].split(".")[0].slice(0, -3)
+    flightResultsThree[0].departure.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".arrival-time-3").text(
-  flightResultsThree[2].arrival.split("T")[0] +
+  flightResultsThree[0].arrival.split("T")[0] +
     " " +
-    flightResultsThree[2].arrival.split("T")[1].split(".")[0].slice(0, -3)
+    flightResultsThree[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
 
 function getEvents(fr) {
-  fr
+  var destCity = "";
+  var destArrival = "";
+  var destDeparture = "";
+  var destCityCode = localStorage.getItem("toCity");
+  for(var i = 0; i < fr.length; i++){
+    if(fr[i].cityCodeTo == destCityCode){
+      destArrival = fr[i].arrival.split("Z")[0];
+      destCity = fr[i].fullCityNameTo;
+    }
+  }
+  for(var i = 0; i < fr.length; i++){
+    if(fr[i].cityCodeFrom == destCityCode){
+      destDeparture = fr[i].arrival.split("Z")[0];
+    }
+  }
+  
+
 }
 
 $(".flight-btn-1").on("click", () => {
   getEvents(flightResultsOne);
-  window.location.href='./events.html';
+  //window.location.href='./events.html';
 });
 
-$(".flight-btn-1").on("click", () => {
+$(".flight-btn-2").on("click", () => {
   getEvents(flightResultsTwo);
-  window.location.href='./events.html';
+  //window.location.href='./events.html';
 });
 
-$(".flight-btn-1").on("click", () => {
+$(".flight-btn-3").on("click", () => {
   getEvents(flightResultsThree);
-  window.location.href='./events.html';
+  //window.location.href='./events.html';
 });
 
-// function autocomplete(inp, arr) {
-//     /*the autocomplete function takes two arguments,
-//     the text field element and an array of possible autocompleted values:*/
-//     var currentFocus;
-//     /*execute a function when someone writes in the text field:*/
-//     inp.addEventListener("input", function(e) {
-//         var a, b, i, val = this.value;
-//         /*close any already open lists of autocompleted values*/
-//         closeAllLists();
-//         if (!val) { return false;}
-//         currentFocus = -1;
-//         /*create a DIV element that will contain the items (values):*/
-//         a = document.createElement("DIV");
-//         a.setAttribute("id", this.id + "autocomplete-list");
-//         a.setAttribute("class", "autocomplete-items");
-//         /*append the DIV element as a child of the autocomplete container:*/
-//         this.parentNode.appendChild(a);
-//         /*for each item in the array...*/
-//         for (i = 0; i < arr.length; i++) {
-//           /*check if the item starts with the same letters as the text field value:*/
-//           if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-//             /*create a DIV element for each matching element:*/
-//             b = document.createElement("DIV");
-//             /*make the matching letters bold:*/
-//             b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-//             b.innerHTML += arr[i].substr(val.length);
-//             /*insert a input field that will hold the current array item's value:*/
-//             b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-//             /*execute a function when someone clicks on the item value (DIV element):*/
-//                 b.addEventListener("click", function(e) {
-//                 /*insert the value for the autocomplete text field:*/
-//                 inp.value = this.getElementsByTagName("input")[0].value;
-//                 /*close the list of autocompleted values,
-//                 (or any other open lists of autocompleted values:*/
-//                 closeAllLists();
-//             });
-//             a.appendChild(b);
-//           }
-//         }
-//     });
-//     /*execute a function presses a key on the keyboard:*/
-//     inp.addEventListener("keydown", function(e) {
-//         var x = document.getElementById(this.id + "autocomplete-list");
-//         if (x) x = x.getElementsByTagName("div");
-//         if (e.keyCode == 40) {
-//           /*If the arrow DOWN key is pressed,
-//           increase the currentFocus variable:*/
-//           currentFocus++;
-//           /*and and make the current item more visible:*/
-//           addActive(x);
-//         } else if (e.keyCode == 38) { //up
-//           /*If the arrow UP key is pressed,
-//           decrease the currentFocus variable:*/
-//           currentFocus--;
-//           /*and and make the current item more visible:*/
-//           addActive(x);
-//         } else if (e.keyCode == 13) {
-//           /*If the ENTER key is pressed, prevent the form from being submitted,*/
-//           e.preventDefault();
-//           if (currentFocus > -1) {
-//             /*and simulate a click on the "active" item:*/
-//             if (x) x[currentFocus].click();
-//           }
-//         }
-//     });
-//     function addActive(x) {
-//       /*a function to classify an item as "active":*/
-//       if (!x) return false;
-//       /*start by removing the "active" class on all items:*/
-//       removeActive(x);
-//       if (currentFocus >= x.length) currentFocus = 0;
-//       if (currentFocus < 0) currentFocus = (x.length - 1);
-//       /*add class "autocomplete-active":*/
-//       x[currentFocus].classList.add("autocomplete-active");
-//     }
-//     function removeActive(x) {
-//       /*a function to remove the "active" class from all autocomplete items:*/
-//       for (var i = 0; i < x.length; i++) {
-//         x[i].classList.remove("autocomplete-active");
-//       }
-//     }
-//     function closeAllLists(elmnt) {
-//       /*close all autocomplete lists in the document,
-//       except the one passed as an argument:*/
-//       var x = document.getElementsByClassName("autocomplete-items");
-//       for (var i = 0; i < x.length; i++) {
-//         if (elmnt != x[i] && elmnt != inp) {
-//         x[i].parentNode.removeChild(x[i]);
-//       }
-//     }
-//   }
-//   /*execute a function when someone clicks in the document:*/
-//   document.addEventListener("click", function (e) {
-//       closeAllLists(e.target);
-//   });
-//   };
-//   autocomplete(document.getElementById("fromInput"), countries);
-
-// need from input to switch to code from location api
-// then do same for return city
-
-// set data as variables for second page
-
-// print results on cards
-//trying to repush
