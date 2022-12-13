@@ -175,6 +175,8 @@ $(".card-subtitle-2").text("$" + flightResults[0].price);
 var flightResults = JSON.parse(localStorage.getItem("flightData2"));
 $(".card-title-3").text(flightResults[0].airline);
 $(".card-subtitle-3").text("$" + flightResults[0].price);
+$(".departure-3").text(flightResults[0].fullCityNameFrom);
+$(".arrival-3").text(flightResults[0].fullCityNameTo);
 
 // function autocomplete(inp, arr) {
 //     /*the autocomplete function takes two arguments,
