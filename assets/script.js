@@ -215,6 +215,8 @@ $(".arrival-time-3").text(
     " " +
     flightResults[2].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
+
+
 // function autocomplete(inp, arr) {
 //     /*the autocomplete function takes two arguments,
 //     the text field element and an array of possible autocompleted values:*/
