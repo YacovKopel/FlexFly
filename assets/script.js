@@ -92,6 +92,7 @@ function getFlightUrl(fromCity, toCity) {
             flightNumber: fullflight[i].flight_no,
             departure: fullflight[i].local_departure,
             arrival: fullflight[i].local_arrival,
+            price: data.data[i].price,
           });
         }
         localStorage.setItem("flightData" + i, JSON.stringify(flightData));
@@ -159,22 +160,23 @@ $(document).ready(function () {
     event.preventDefault();
     returnMon(uptodate);
     getCityCodeFrom();
-  
+
     // Submit the form
   });
 });
 var flightResults = JSON.parse(localStorage.getItem("flightData0"));
 $(".card-title-1").text(flightResults[0].airline);
-$(".card-subtitle-1").text(flightResults[0].flightNumber);
+$(".card-subtitle-1").text("$" + flightResults[0].price);
 
 var flightResults = JSON.parse(localStorage.getItem("flightData1"));
 $(".card-title-2").text(flightResults[0].airline);
-$(".card-subtitle-2").text(flightResults[0].flightNumber);
+$(".card-subtitle-2").text("$" + flightResults[0].price);
 
 var flightResults = JSON.parse(localStorage.getItem("flightData2"));
 $(".card-title-3").text(flightResults[0].airline);
-$(".card-subtitle-3").text(flightResults[0].flightNumber);
-
+$(".card-subtitle-3").text("$" + flightResults[0].price);
+$(".departure-3").text(flightResults[0].fullCityNameFrom);
+$(".arrival-3").text(flightResults[0].fullCityNameTo);
 
 // function autocomplete(inp, arr) {
 //     /*the autocomplete function takes two arguments,
