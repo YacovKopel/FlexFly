@@ -175,19 +175,46 @@ $(".card-subtitle-2").text("$" + flightResults[0].price);
 var flightResults = JSON.parse(localStorage.getItem("flightData2"));
 $(".card-title-3").text(flightResults[0].airline);
 $(".card-subtitle-3").text("$" + flightResults[0].price);
+
+//departure and arrival locations
+$(".departure-1").text(flightResults[0].fullCityNameFrom);
+$(".arrival-1").text(flightResults[0].fullCityNameTo);
+$(".departure-2").text(flightResults[0].fullCityNameFrom);
+$(".arrival-2").text(flightResults[0].fullCityNameTo);
 $(".departure-3").text(flightResults[0].fullCityNameFrom);
 $(".arrival-3").text(flightResults[0].fullCityNameTo);
-$(".departure-time-3").text(
+
+//departure and arrival times
+$(".departure-time-1").text(
   flightResults[0].departure.split("T")[0] +
     " " +
     flightResults[0].departure.split("T")[1].split(".")[0].slice(0, -3)
 );
-$(".arrival-time-3").text(
+$(".arrival-time-1").text(
   flightResults[0].arrival.split("T")[0] +
     " " +
     flightResults[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
-
+$(".departure-time-2").text(
+  flightResults[1].departure.split("T")[0] +
+    " " +
+    flightResults[1].departure.split("T")[1].split(".")[0].slice(0, -3)
+);
+$(".arrival-time-2").text(
+  flightResults[1].arrival.split("T")[0] +
+    " " +
+    flightResults[1].arrival.split("T")[1].split(".")[0].slice(0, -3)
+);
+$(".departure-time-3").text(
+  flightResults[2].departure.split("T")[0] +
+    " " +
+    flightResults[2].departure.split("T")[1].split(".")[0].slice(0, -3)
+);
+$(".arrival-time-3").text(
+  flightResults[2].arrival.split("T")[0] +
+    " " +
+    flightResults[2].arrival.split("T")[1].split(".")[0].slice(0, -3)
+);
 // function autocomplete(inp, arr) {
 //     /*the autocomplete function takes two arguments,
 //     the text field element and an array of possible autocompleted values:*/
