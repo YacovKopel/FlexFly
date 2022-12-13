@@ -177,6 +177,16 @@ $(".card-title-3").text(flightResults[0].airline);
 $(".card-subtitle-3").text("$" + flightResults[0].price);
 $(".departure-3").text(flightResults[0].fullCityNameFrom);
 $(".arrival-3").text(flightResults[0].fullCityNameTo);
+$(".departure-time-3").text(
+  flightResults[0].departure.split("T")[0] +
+    " " +
+    flightResults[0].departure.split("T")[1].split(".")[0].slice(0, -3)
+);
+$(".arrival-time-3").text(
+  flightResults[0].arrival.split("T")[0] +
+    " " +
+    flightResults[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
+);
 
 // function autocomplete(inp, arr) {
 //     /*the autocomplete function takes two arguments,
