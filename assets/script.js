@@ -132,15 +132,6 @@ async function getCityCodeTo() {
        
 }
 
-$(document).ready(function(){
-    submitBtn.on('click',function(event){
-        event.preventDefault();
-        returnMon(uptodate);
-        getCityCodeFrom();
-        
-         // Submit the form
-    });
-}
 
 $(document).ready(function () {
   submitBtn.on("click", function (event) {
