@@ -1,7 +1,7 @@
 #Flexfly
 
 #Project Goals 
-*To provide a user friendly experience where users can find inexpensive flights and experiences in a single application. Save money and time in an application that will initially be an information page only 
+*To provide a user friendly experience where users can find the cheapest direct flights to anywhere and know about experiences in that destination in a single application. The user will have a variety of flight options. Based off of the user selection, a variety of events at that destination will be display so the user can plan what to do during their trip. Links will be provided for the events. Its a one stop shop for trip info. 
 
 #Iceboxed ideas: 
 *Possible bookings
@@ -15,11 +15,11 @@
 
 #User Story 
 * As a user I want to be able to land on a page
-* As a user I want to input my starting location and destination
+* As a user I want to input my location and destination
 * As as user I want to input my trip duration 
 * As a user I want to select when I can travel 
 #(Pg 2)
-* As a user I want to see a list of options based on my preferences 
+* As a user I want to see a variety of the cheapest flight options based on my preferences 
 * As a user I want to be able to select the option based on my query
 #(Pg 3)
 * As a user I want to see my flight itinerary based on my inputs
