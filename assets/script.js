@@ -56,7 +56,7 @@ function getFlightUrl(fromCity, toCity) {
     "&nights_in_dst_to=" +
     duration.val() +
     "&flight_type=round" +
-    "&curr=USD&max_stopovers=1&sort=price&asc=1&limit=3";
+    "&curr=USD&max_stopovers=0&sort=price&asc=1&limit=3";
   console.log(newurl);
   fetch(newurl, {
     method: "GET",
@@ -70,16 +70,16 @@ function getFlightUrl(fromCity, toCity) {
     .then(function (data) {
       console.log(data);
       console.log(data.data.length);
-      for (let i = 0; i < data.data.length; i++) {
-        var fullflight = data.data[i].route;
-        console.log("price", data.data[i].price);
+      for (let j = 0; j < data.data.length; j++) {
+        var fullflight = data.data[j].route;
+        console.log("price", data.data[j].price);
         console.log(
           "Flight from " +
-            data.data[i].cityFrom +
+            data.data[j].cityFrom +
             " to " +
-            data.data[i].cityTo +
+            data.data[j].cityTo +
             " only $" +
-            data.data[i].price
+            data.data[j].price
         );
         console.log(fullflight);
         var flightData = [];
@@ -94,11 +94,12 @@ function getFlightUrl(fromCity, toCity) {
             flightNumber: fullflight[i].flight_no,
             departure: fullflight[i].local_departure,
             arrival: fullflight[i].local_arrival,
-            price: data.data[i].price,
+            flightprice: data.data[j].price,
           });
         }
-        localStorage.setItem("flightData" + i, JSON.stringify(flightData));
+        localStorage.setItem("flightData" + j, JSON.stringify(flightData));
         localStorage.setItem("toCityCode", toCity)
+
         window.location.href = "./assets/info.html";
       }
     })
@@ -214,9 +215,9 @@ $(".departure-time-3").text(
     flightResults3[0].departure.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".arrival-time-3").text(
-  flightResults3[0].arrival.split("T")[0] +
+  flightResultsThree[0].arrival.split("T")[0] +
     " " +
-    flightResults3[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
+    flightResultsThree[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
 
 var seatGeekKey = "&client_id=MzA4OTQzMjR8MTY3MDYxMjQzMi41NjI0NDc4";
