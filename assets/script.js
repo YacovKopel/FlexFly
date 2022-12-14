@@ -33,6 +33,7 @@ function returnMon() {
   return uptodate;
 }
 
+
 var url = "https://api.tequila.kiwi.com/v2/search";
 var apikey = "9dU5c1zZxOO4AyOA58aEW70owtRgoHgC";
 
@@ -97,7 +98,7 @@ function getFlightUrl(fromCity, toCity) {
           });
         }
         localStorage.setItem("flightData" + i, JSON.stringify(flightData));
-        localStorage.setItem("toCity", toCity);
+        localStorage.setItem("toCityCode", toCity)
         window.location.href = "./assets/info.html";
       }
     })
@@ -218,11 +219,16 @@ $(".arrival-time-3").text(
     flightResultsThree[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
 
+var seatGeekKey = "&client_id=MzA4OTQzMjR8MTY3MDYxMjQzMi41NjI0NDc4";
+var seatGeekURL = "https://api.seatgeek.com/2/events?"; 
+var events = JSON.parse(localStorage.getItem("events"));
+var destCity = localStorage.getItem("destCity");
+var destArrival = localStorage.getItem("destArrival");
+var destDeparture = localStorage.getItem("destDeparture");
+
 function getEvents(fr) {
-  var destCity = "";
-  var destArrival = "";
-  var destDeparture = "";
-  var destCityCode = localStorage.getItem("toCity");
+  var seatGeekURL = "https://api.seatgeek.com/2/events?";
+  var destCityCode = localStorage.getItem("toCityCode");
   for(var i = 0; i < fr.length; i++){
     if(fr[i].cityCodeTo == destCityCode){
       destArrival = fr[i].arrival.split("Z")[0];
@@ -234,22 +240,37 @@ function getEvents(fr) {
       destDeparture = fr[i].arrival.split("Z")[0];
     }
   }
-  
-
+  localStorage.setItem("destCity", destCity);
+  localStorage.setItem("destArrival", destArrival);
+  localStorage.setItem("destDeparture", destDeparture);
+  seatGeekURL = seatGeekURL + "datetime_utc.gt=" + destArrival + "&datetime_utc.lt=" + destDeparture + "&venue.city=" + destCity + "&sort=score.desc" +seatGeekKey;
+  console.log(seatGeekURL);
+  fetch(seatGeekURL)
+    .then((resp) => resp.json())
+    .then( function(data) {
+      events = data.events;
+      localStorage.setItem("events", JSON.stringify(events));
+      window.location.replace('./events.html');
+    });
 }
 
 $(".flight-btn-1").on("click", () => {
   getEvents(flightResultsOne);
-  //window.location.href='./events.html';
 });
 
 $(".flight-btn-2").on("click", () => {
   getEvents(flightResultsTwo);
-  //window.location.href='./events.html';
 });
 
 $(".flight-btn-3").on("click", () => {
   getEvents(flightResultsThree);
-  //window.location.href='./events.html';
 });
 
+$('.events-heading').text("Events in " + destCity);
+
+for(var i=0; i<events.length; i++){
+  var listItem = "<li>";
+  listItem += "<b>" + parseInt(events[i].datetime_local.split("-")[1]) + "/" + parseInt(events[i].datetime_local.split("-")[2].split("T")[0]) + ":</b> ";
+  listItem += "<a href=\"" + events[i].url + "\" target=_blank>"  + events[i].title + "</a>";
+  $('.events-list').append(listItem);
+}
