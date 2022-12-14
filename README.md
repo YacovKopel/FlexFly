@@ -12,6 +12,10 @@ N/A
 ## Usage
 To use this page the user will fill in the form displayed on screen. Users will enter city names into the "From" and "To" section. They then will choose the number of days they want their trip duration to be. Lastly, they will choose the time span between the current date and 6 months that they would like the flights to be selected from. Users will then press "Search Deals". This will direct the user to the next page which will display the top three cheapest flights with varying dates and times to travel. The user will click on one of the options. This will direct them to a new page. This new page will have their flight info as well events during their travel dates. Users can then click on the events they are interested in and will be redirected to SeatGeek.com so they can purchase tickets.
 
+![Screenshot of webpage](./assets/images/page1%20(1).jpeg)
+![Screenshot of webpage](./assets/images/page2.jpeg)
+![Screenshot of webpage](./assets/images/page3.jpeg)
+
 
 ##User Story 
 * As a user I want to input my location and destination
