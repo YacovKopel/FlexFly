@@ -55,7 +55,7 @@ function getFlightUrl(fromCity, toCity) {
     duration.val() +
     "&flight_type=round" +
     "&curr=USD&max_stopovers=0&sort=price&asc=1&limit=3";
-  console.log(newurl);
+
   fetch(newurl, {
     method: "GET",
     withCredentials: true,
@@ -66,23 +66,11 @@ function getFlightUrl(fromCity, toCity) {
   })
     .then((resp) => resp.json())
     .then(function (data) {
-      console.log(data);
-      console.log(data.data.length);
+      
       for (let j = 0; j < data.data.length; j++) {
         var fullflight = data.data[j].route;
-        console.log("price", data.data[j].price);
-        console.log(
-          "Flight from " +
-            data.data[j].cityFrom +
-            " to " +
-            data.data[j].cityTo +
-            " only $" +
-            data.data[j].price
-        );
-        console.log(fullflight);
         var flightData = [];
         for (let i = 0; i < fullflight.length; i++) {
-          console.log(fullflight.length);
           flightData.push({
             cityCodeFrom: fullflight[i].cityCodeFrom,
             cityCodeTo: fullflight[i].cityCodeTo,
@@ -113,7 +101,6 @@ async function getCityCodeFrom() {
     "?term=" +
     from.val() +
     "&locale=en-US&location_types=city&limit=10&active_only=true";
-  console.log(citynewurl);
   await fetch(citynewurl, {
     method: "GET",
     withCredentials: true,
@@ -125,7 +112,6 @@ async function getCityCodeFrom() {
     .then((resp) => resp.json())
     .then(function (data) {
       fromCity = data.locations[0].code;
-      console.log(fromCity);
       getCityCodeTo();
     })
     .catch(function (error) {
@@ -139,7 +125,6 @@ async function getCityCodeTo() {
     to.val() +
     "&locale=en-US&location_types=city&limit=10&active_only=true";
 
-  console.log(toCityurl);
   await fetch(toCityurl, {
     method: "GET",
     withCredentials: true,
@@ -151,7 +136,6 @@ async function getCityCodeTo() {
     .then((resp) => resp.json())
     .then(function (data) {
       toCity = data.locations[0].code;
-      console.log(toCity);
       getFlightUrl(fromCity, toCity);
     })
     .catch(function (error) {
@@ -165,7 +149,6 @@ $(document).ready(function () {
     returnMon(uptodate);
     getCityCodeFrom();
 
-    // Submit the form
   });
 });
 var flightResults1 = JSON.parse(localStorage.getItem("flightData0"));
@@ -285,13 +268,11 @@ function getEvents(fr) {
   localStorage.setItem("destCity", destCity);
   localStorage.setItem("destArrival", destArrival);
   localStorage.setItem("destDeparture", destDeparture);
-  seatGeekURL = seatGeekURL + "datetime_utc.gt=" + destArrival + "&datetime_utc.lt=" + destDeparture + "&venue.city=" + destCity +'&per_page=20'+ seatGeekKey;
-  console.log(seatGeekURL);
+  seatGeekURL = seatGeekURL + "datetime_utc.gt=" + destArrival + "&datetime_utc.lt=" + destDeparture + "&venue.city=" + destCity + '&sort=score.desc&per_page=20'+ seatGeekKey;
   fetch(seatGeekURL)
     .then((resp) => resp.json())
     .then( function(data) {
       events = data.events;
-      console.log(events)
       localStorage.setItem("events", JSON.stringify(events));
       window.location.replace('./events.html');
     });
