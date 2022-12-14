@@ -84,8 +84,8 @@ function getFlightUrl(fromCity, toCity) {
         for (let i = 0; i < fullflight.length; i++) {
           console.log(fullflight.length);
           flightData.push({
-            cityCodefrom: fullflight[i].cityCodeFrom,
-            cityCodeto: fullflight[i].cityCodeTo,
+            cityCodeFrom: fullflight[i].cityCodeFrom,
+            cityCodeTo: fullflight[i].cityCodeTo,
             airline: fullflight[i].airline,
             fullCityNameFrom: fullflight[i].cityFrom,
             fullCityNameTo: fullflight[i].cityTo,
@@ -97,8 +97,11 @@ function getFlightUrl(fromCity, toCity) {
         }
       
         localStorage.setItem("flightData" + j, JSON.stringify(flightData));
-        window.location.href = "./assets/info.html";
+        
       }
+      localStorage.setItem("toCityCode", toCity)
+      window.location.href = "./assets/info.html";
+      
     })
     .catch(function (error) {
       console.log(error);
@@ -282,12 +285,13 @@ function getEvents(fr) {
   localStorage.setItem("destCity", destCity);
   localStorage.setItem("destArrival", destArrival);
   localStorage.setItem("destDeparture", destDeparture);
-  seatGeekURL = seatGeekURL + "datetime_utc.gt=" + destArrival + "&datetime_utc.lt=" + destDeparture + "&venue.city=" + destCity + "&sort=score.desc" +seatGeekKey;
+  seatGeekURL = seatGeekURL + "datetime_utc.gt=" + destArrival + "&datetime_utc.lt=" + destDeparture + "&venue.city=" + destCity +'&per_page=20'+ seatGeekKey;
   console.log(seatGeekURL);
   fetch(seatGeekURL)
     .then((resp) => resp.json())
     .then( function(data) {
       events = data.events;
+      console.log(events)
       localStorage.setItem("events", JSON.stringify(events));
       window.location.replace('./events.html');
     });
