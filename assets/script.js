@@ -33,11 +33,13 @@ function returnMon() {
   return uptodate;
 }
 
+
 var url = "https://api.tequila.kiwi.com/v2/search";
 var apikey = "9dU5c1zZxOO4AyOA58aEW70owtRgoHgC";
 
 var fromCity = "";
 var toCity = "";
+
 function getFlightUrl(fromCity, toCity) {
   var newurl =
     "https://api.tequila.kiwi.com/v2/search" +
@@ -84,19 +86,20 @@ function getFlightUrl(fromCity, toCity) {
         for (let i = 0; i < fullflight.length; i++) {
           console.log(fullflight.length);
           flightData.push({
-            cityCodefrom: fullflight[i].cityCodeFrom,
-            cityCodeto: fullflight[i].cityCodeTo,
+            cityCodeFrom: fullflight[i].cityCodeFrom,
+            cityCodeTo: fullflight[i].cityCodeTo,
             airline: fullflight[i].airline,
             fullCityNameFrom: fullflight[i].cityFrom,
             fullCityNameTo: fullflight[i].cityTo,
             flightNumber: fullflight[i].flight_no,
             departure: fullflight[i].local_departure,
             arrival: fullflight[i].local_arrival,
-            flightprice: data.data[j].price,
+            price: data.data[j].price,
           });
         }
-      
         localStorage.setItem("flightData" + j, JSON.stringify(flightData));
+        localStorage.setItem("toCityCode", toCity)
+
         window.location.href = "./assets/info.html";
       }
     })
@@ -165,17 +168,18 @@ $(document).ready(function () {
     // Submit the form
   });
 });
+
 var flightResults1 = JSON.parse(localStorage.getItem("flightData0"));
 $(".card-title-1").text(flightResults1[0].airline);
-$(".card-subtitle-1").text("$" + flightResults1[0].flightprice);
+$(".card-subtitle-1").text("$" + flightResults1[0].price);
 
 var flightResults2 = JSON.parse(localStorage.getItem("flightData1"));
 $(".card-title-2").text(flightResults2[0].airline);
-$(".card-subtitle-2").text("$" + flightResults2[0].flightprice);
+$(".card-subtitle-2").text("$" + flightResults2[0].price);
 
 var flightResults3 = JSON.parse(localStorage.getItem("flightData2"));
 $(".card-title-3").text(flightResults3[0].airline);
-$(".card-subtitle-3").text("$" + flightResults3[0].flightprice);
+$(".card-subtitle-3").text("$" + flightResults3[0].price);
 
 //departure and arrival locations
 $(".departure-1").text(flightResults1[0].fullCityNameFrom);
@@ -217,42 +221,109 @@ $(".arrival-time-3").text(
     flightResults3[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
 
-//departure and arrival locations
-$(".departure-return-1").text(flightResults1[1].fullCityNameFrom);
-$(".arrival-return-1").text(flightResults1[1].fullCityNameTo);
-$(".departure-return-2").text(flightResults2[1].fullCityNameFrom);
-$(".arrival-return-2").text(flightResults2[1].fullCityNameTo);
-$(".departure-return-3").text(flightResults3[1].fullCityNameFrom);
-$(".arrival-return-3").text(flightResults3[1].fullCityNameTo);
+var seatGeekKey = "&client_id=MzA4OTQzMjR8MTY3MDYxMjQzMi41NjI0NDc4";
+var seatGeekURL = "https://api.seatgeek.com/2/events?"; 
+var events = JSON.parse(localStorage.getItem("events"));
+var destCity = localStorage.getItem("destCity");
+var destArrival = localStorage.getItem("destArrival");
+var destDeparture = localStorage.getItem("destDeparture");
+var flightIndex = localStorage.getItem("flightIndex");
 
-//departure and arrival times
-$(".departure-return-time-1").text(
-  flightResults1[1].departure.split("T")[0] +
-    " " +
-    flightResults1[1].departure.split("T")[1].split(".")[0].slice(0, -3)
-);
-$(".arrival-return-time-1").text(
-  flightResults1[1].arrival.split("T")[0] +
-    " " +
-    flightResults1[1].arrival.split("T")[1].split(".")[0].slice(0, -3)
-);
-$(".departure-return-time-2").text(
-  flightResults2[1].departure.split("T")[0] +
-    " " +
-    flightResults2[1].departure.split("T")[1].split(".")[0].slice(0, -3)
-);
-$(".arrival-return-time-2").text(
-  flightResults2[1].arrival.split("T")[0] +
-    " " +
-    flightResults2[1].arrival.split("T")[1].split(".")[0].slice(0, -3)
-);
-$(".departure-return-time-3").text(
-  flightResults3[1].departure.split("T")[0] +
-    " " +
-    flightResults3[1].departure.split("T")[1].split(".")[0].slice(0, -3)
-);
-$(".arrival-return-time-3").text(
-  flightResults3[1].arrival.split("T")[0] +
-    " " +
-    flightResults3[1].arrival.split("T")[1].split(".")[0].slice(0, -3)
-);
+function getEvents(fr) {
+  var seatGeekURL = "https://api.seatgeek.com/2/events?";
+  var destCityCode = localStorage.getItem("toCityCode");
+  for(var i = 0; i < fr.length; i++){
+    if(fr[i].cityCodeTo == destCityCode){
+      destArrival = fr[i].arrival.split("Z")[0];
+      destCity = fr[i].fullCityNameTo;
+    }
+  }
+  for(var i = 0; i < fr.length; i++){
+    if(fr[i].cityCodeFrom == destCityCode){
+      destDeparture = fr[i].arrival.split("Z")[0];
+    }
+  }
+  localStorage.setItem("destCity", destCity);
+  localStorage.setItem("destArrival", destArrival);
+  localStorage.setItem("destDeparture", destDeparture);
+  seatGeekURL = seatGeekURL + "datetime_utc.gt=" + destArrival + "&datetime_utc.lt=" + destDeparture + "&venue.city=" + destCity + "&sort=score.desc" +seatGeekKey;
+  console.log(seatGeekURL);
+  fetch(seatGeekURL)
+    .then((resp) => resp.json())
+    .then( function(data) {
+      events = data.events;
+      localStorage.setItem("events", JSON.stringify(events));
+      window.location.replace('./events.html');
+    });
+}
+
+$(".flight-btn-1").on("click", () => {
+  localStorage.setItem("flightIndex", 0);
+  getEvents(flightResults1);
+});
+
+$(".flight-btn-2").on("click", () => {
+  localStorage.setItem("flightIndex", 1);
+  getEvents(flightResults2);
+});
+
+$(".flight-btn-3").on("click", () => {
+  localStorage.setItem("flightIndex", 2);
+  getEvents(flightResults3);
+});
+
+var flight = JSON.parse(localStorage.getItem("flightData" + flightIndex));
+const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+$('.flights-heading').text("Your Itinerary");
+
+for(var i=0; i<flight.length; i++){
+
+  var takeoff = new Date(flight[i].departure);
+  var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(takeoff);
+  var mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(takeoff);
+  var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(takeoff);
+  var hour = flight[i].departure.split("T")[1].split(":")[0];
+  var ampm = "AM";
+  if(hour > 12){
+    hour -= 12;
+    ampm = "PM"
+  }
+  var minute = flight[i].departure.split("T")[1].split(":")[1];
+  var takeoffString = weekday[takeoff.getDay()].slice(0,3) + ", " + `${mo} ${da}, ${ye}` +" (" + hour + ":" + minute + " " + ampm + ")";
+
+  var landing = new Date(flight[i].arrival); 
+  ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(landing);
+  mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(landing);
+  da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(landing);
+  hour = flight[i].arrival.split("T")[1].split(":")[0];
+  ampm = "AM";
+  if(hour > 12){
+    hour -= 12;
+    ampm = "PM"
+  }
+  minute = flight[i].departure.split("T")[1].split(":")[1];
+  var landingString = weekday[landing.getDay()].slice(0,3) + ", " + `${mo} ${da}, ${ye}` +" (" + hour + ":" + minute + " " + ampm + ")";
+
+  var flightLeg = "<div style=\"margin: 30px 30px 40px 30px\"><h2 style=\"font-size: 20px; margin-bottom: 10px\">" + flight[i].airline + " Flight #" + flight[i].flightNumber + "</h2>";
+  flightLeg += "<div style=\"margin-left: 20px\"> <i class=\"fa-solid fa-plane-departure\"></i><p style=\"margin-left:10px; display:inline-block; font-size: 17px; font-weight: normal;\"><b>" + flight[i].fullCityNameFrom + "</b>: " + takeoffString + "</p></div>";
+  flightLeg += "<div style=\"margin-left: 20px\"> <i class=\"fa-solid fa-plane-arrival\"></i><p style=\"margin-left:10px; display:inline-block; font-size: 17px; font-weight: normal;\"><b>" + flight[i].fullCityNameTo + "</b>: " + landingString + "</p></div>";
+  $('.flights-heading').append(flightLeg);
+}
+
+$('.events-heading').text("Events in " + destCity);
+
+for(var i=0; i<events.length; i++){
+  var printLine = true;
+  for(var j=0; j<i; j++){
+    if(events[j].title == events[i].title){
+      printLine = false;
+    }
+  }
+  if(printLine){
+    var listItem = "<li>";
+    listItem += "<b>" + parseInt(events[i].datetime_local.split("-")[1]) + "/" + parseInt(events[i].datetime_local.split("-")[2].split("T")[0]) + ":</b> ";
+    listItem += "<a href=\"" + events[i].url + "\" target=_blank>"  + events[i].title + "</a>";
+    $('.events-list').append(listItem);
+  }
+}
