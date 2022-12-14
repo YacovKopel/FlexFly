@@ -297,15 +297,15 @@ function getEvents(fr) {
 }
 
 $(".flight-btn-1").on("click", () => {
-  getEvents(flightResultsOne);
+  getEvents(flightResults1);
 });
 
 $(".flight-btn-2").on("click", () => {
-  getEvents(flightResultsTwo);
+  getEvents(flightResults2);
 });
 
 $(".flight-btn-3").on("click", () => {
-  getEvents(flightResultsThree);
+  getEvents(flightResults3);
 });
 
 $('.events-heading').text("Events in " + destCity);
