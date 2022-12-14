@@ -94,7 +94,7 @@ function getFlightUrl(fromCity, toCity) {
             flightNumber: fullflight[i].flight_no,
             departure: fullflight[i].local_departure,
             arrival: fullflight[i].local_arrival,
-            flightprice: data.data[j].price,
+            price: data.data[j].price,
           });
         }
         localStorage.setItem("flightData" + j, JSON.stringify(flightData));
@@ -168,6 +168,7 @@ $(document).ready(function () {
     // Submit the form
   });
 });
+
 var flightResults1 = JSON.parse(localStorage.getItem("flightData0"));
 $(".card-title-1").text(flightResults1[0].airline);
 $(".card-subtitle-1").text("$" + flightResults1[0].price);
@@ -215,9 +216,9 @@ $(".departure-time-3").text(
     flightResults3[0].departure.split("T")[1].split(".")[0].slice(0, -3)
 );
 $(".arrival-time-3").text(
-  flightResultsThree[0].arrival.split("T")[0] +
+  flightResults3[0].arrival.split("T")[0] +
     " " +
-    flightResultsThree[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
+    flightResults3[0].arrival.split("T")[1].split(".")[0].slice(0, -3)
 );
 
 var seatGeekKey = "&client_id=MzA4OTQzMjR8MTY3MDYxMjQzMi41NjI0NDc4";
